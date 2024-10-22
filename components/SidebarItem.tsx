@@ -39,7 +39,6 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
         active && "text-white"
       )}
     >
-      {/* video start from 24:14 */}
       <Icon size={26} />
       <p className="truncate w-full">{label}</p>
     </Link>
