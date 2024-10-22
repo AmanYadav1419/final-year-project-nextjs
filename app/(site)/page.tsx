@@ -1,7 +1,7 @@
 import React from "react";
 
 const Home = () => {
-  return <div className="text-green-500">Hello from RhythmNet (Site)!</div>;
+  return ( <div className="text-green-500">Main Content</div>);
 };
 
 export default Home;
