@@ -1,8 +1,11 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { BiSearch } from "react-icons/bi";
+import { HiHome } from "react-icons/hi";
 import { RxCaretLeft, RxCaretRight } from "react-icons/rx";
 import { twMerge } from "tailwind-merge";
+import Button from "./Button";
 
 interface HeaderProps {
   children: React.ReactNode;
@@ -82,7 +85,60 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
             <RxCaretRight className="text-white" size={35} />
           </button>
         </div>
-        {/* video start from 35:30 */}
+
+        <div className="flex md:hidden gap-x-2 items-center">
+          {/* on mobile screen nice Home Button */}
+
+          <button
+            className="
+            rounded-full
+            p-2
+            bg-white
+            flex
+            items-center
+            justify-center
+            hover:opacity-75
+            transition
+            "
+          >
+            <HiHome className="text-black" size={20} />
+          </button>
+
+          {/* on mobile screen nice Search Button */}
+          <button
+            className="
+            rounded-full
+            p-2
+            bg-white
+            flex
+            items-center
+            justify-center
+            hover:opacity-75
+            transition
+            "
+          >
+            <BiSearch className="text-black" size={20} />
+          </button>
+        </div>
+
+        {/* div for login and sign up */}
+        <div
+          className="
+        flex
+        justify-between
+        items-center
+        gap-x-4
+        "
+        >
+          <>
+            <div>
+              {/* import the custom button */}
+                <Button>
+                    Sign Up
+                </Button>
+            </div>
+          </>
+        </div>
       </div>
     </div>
   );
