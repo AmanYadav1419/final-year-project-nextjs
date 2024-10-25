@@ -133,13 +133,35 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
           <>
             <div>
               {/* import the custom button */}
-                <Button>
-                    Sign Up
-                </Button>
+              <Button
+                onClick={()=> {}}
+                className="
+                  bg-transparent
+                  text-neutral-300
+                  font-medium
+                  "
+              >
+                Sign Up
+              </Button>
+            </div>
+
+            <div>
+              {/* import the custom button */}
+              <Button
+                onClick={()=> {}}
+                className="
+                  bg-white
+                  px-6
+                  py-2
+                  "
+              >
+                Log in
+              </Button>
             </div>
           </>
         </div>
       </div>
+      {children}
     </div>
   );
 };
