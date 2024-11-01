@@ -1,5 +1,9 @@
 import Stripe from "stripe";
 
+/* Stripe is a popular payment processing platform that allows 
+businesses to accept payments online. It provides various APIs
+ to handle transactions, subscriptions, and user management.*/
+
 export interface UserDetails {
     id: string;
     first_name: string;
@@ -52,6 +56,4 @@ export interface Subscription {
     trial_end?: string;
     price?: Price;
 
-
-
-}
+} 

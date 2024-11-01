@@ -5,6 +5,9 @@ import { createClientComponentClient} from "@supabase/auth-helpers-nextjs";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import { useState } from "react";
 
+/*Subabase is a open-source Firebase alternative that provides a backend as a service,
+ including a database, authentication, and real-time subscriptions."use client*/
+
 
 interface SupabaseProviderProps {
     children: React.ReactNode;
@@ -13,7 +16,8 @@ interface SupabaseProviderProps {
 const SupabaseProvider: React.FC<SupabaseProviderProps> =({
     children
 }) => {
-   const [supabaseClient] = useState(() =>
+   const [supabaseClient] = useState(() =>    
+    //  The useState hook initializes the supabaseClient state variable
     createClientComponentClient<Database>()
 );
 
