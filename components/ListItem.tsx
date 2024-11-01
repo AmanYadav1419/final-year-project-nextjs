@@ -77,4 +77,5 @@ const ListItem: React.FC<ListItemProps> = ({ image, name, herf }) => {
   );
 };
 
+
 export default ListItem;

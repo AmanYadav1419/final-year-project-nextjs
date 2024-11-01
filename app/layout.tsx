@@ -40,9 +40,6 @@ export default function RootLayout({
           </UserProvider> 
            
         </SupabaseProvider>
-        
-          
-        
       </body>
     </html>
   );
