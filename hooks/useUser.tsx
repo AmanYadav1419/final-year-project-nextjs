@@ -1,4 +1,3 @@
-//video start from 1:34:30//
 import { User } from "@supabase/auth-helpers-nextjs"; 
 import { 
     useSessionContext, 
