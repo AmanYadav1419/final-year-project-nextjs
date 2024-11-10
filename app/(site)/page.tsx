@@ -41,7 +41,7 @@ const Home = () => {
             <ListItem
               image="/images/liked.png"
               name="Liked Songs"
-              herf="liked"
+              href="liked"
             />
           </div>
         </div>

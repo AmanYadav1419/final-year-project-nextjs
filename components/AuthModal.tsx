@@ -9,12 +9,20 @@ import { Auth } from "@supabase/auth-ui-react";
 import { useAmp } from "next/amp";
 import useAuthModal from "@/hooks/useAuthModal";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
+import { useEffect } from "react";
 
 const AuthModal = () => {
     const supabaseClient = useSupabaseClient();
     const router = useRouter();
     const { session } = useSessionContext();
     const {onClose, isOpen} = useAuthModal();
+
+    // useEffect{() => {
+    //     if (session) {
+            
+    //     }
+    // }[]
+    // };
 
     const onChange = (open: boolean) => {
         if (!open){
@@ -30,7 +38,7 @@ const AuthModal = () => {
             isOpen={isOpen}    //hide loggin page {isOpen}
             onChange={onChange}
         >
-            Auth modal children!
+            {/* Auth modal children! */}
             <Auth
             theme="dark"
             magicLink
@@ -55,4 +63,4 @@ const AuthModal = () => {
 
 export default AuthModal;
 
-// ii
+// video start from 2:12:40
