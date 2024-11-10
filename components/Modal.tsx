@@ -3,14 +3,15 @@ import { IoMdClose } from "react-icons/io";
 
 interface ModelProps{
     isOpen: boolean;
-    Onchange: (open: boolean) => void;
+    // fixed the typo in the prop name by aman yadav
+    OnChange: (open: boolean) => void;
     title: string;
     description: string;
     children: React.ReactNode,
 }
 const Modal: React.FC<ModelProps> = ({
     isOpen,
-    onChange,
+    OnChange,
     title,
     description,
     children
@@ -19,7 +20,7 @@ const Modal: React.FC<ModelProps> = ({
       <Dialog.Root
         open = {isOpen}
         defaultOpen = {isOpen}
-        onOpenChange = {onChange}
+        onOpenChange = {OnChange}
 
         >
             <Dialog.Portal>

@@ -9,7 +9,7 @@ import { Auth } from "@supabase/auth-ui-react";
 import { useAmp } from "next/amp";
 import useAuthModal from "@/hooks/useAuthModal";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 
 const AuthModal = () => {
     const supabaseClient = useSupabaseClient();
@@ -17,12 +17,6 @@ const AuthModal = () => {
     const { session } = useSessionContext();
     const {onClose, isOpen} = useAuthModal();
 
-    // useEffect{() => {
-    //     if (session) {
-            
-    //     }
-    // }[]
-    // };
 
     const onChange = (open: boolean) => {
         if (!open){
@@ -36,12 +30,14 @@ const AuthModal = () => {
             title="Welcome back"
             description="Login to your account"
             isOpen={isOpen}    //hide loggin page {isOpen}
-            onChange={onChange}
+            // fixed the typo in the prop name by aman yadav
+            OnChange={onChange}
         >
             {/* Auth modal children! */}
             <Auth
             theme="dark"
             magicLink
+            // we can add more providers for authentication like google, twitter, etc. commented out by aman yadav
             providers={["github"]}
                 supabaseClient={supabaseClient}
                 appearance={{
