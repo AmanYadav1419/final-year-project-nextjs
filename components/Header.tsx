@@ -4,8 +4,11 @@ import { useRouter } from "next/navigation";
 import { BiSearch } from "react-icons/bi";
 import { HiHome } from "react-icons/hi";
 import { RxCaretLeft, RxCaretRight } from "react-icons/rx";
+
+
 import { twMerge } from "tailwind-merge";
 import Button from "./Button";
+import useAuthModal from "@/hooks/useAuthModal";
 
 interface HeaderProps {
   children: React.ReactNode;
@@ -13,6 +16,7 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ children, className }) => {
+  const authModal = useAuthModal();
   // used router hook for navigation
   const router = useRouter();
 
@@ -134,7 +138,7 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
             <div>
               {/* import the custom button */}
               <Button
-                onClick={()=> {}}
+                onClick={authModal.onOpen}
                 className="
                   bg-transparent
                   text-neutral-300
@@ -148,7 +152,7 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
             <div>
               {/* import the custom button */}
               <Button
-                onClick={()=> {}}
+                onClick={authModal.onOpen}
                 className="
                   bg-white
                   px-6
