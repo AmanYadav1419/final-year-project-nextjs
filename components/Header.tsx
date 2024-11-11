@@ -11,6 +11,7 @@ import useAuthModal from "@/hooks/useAuthModal";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useUser } from "@/hooks/useUser";
 import { FaUserAlt } from "react-icons/fa";
+import { toast } from "react-hot-toast";
 
 interface HeaderProps {
   children: React.ReactNode;
@@ -33,9 +34,14 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
     // TODO:Reset any playing songs in future
     router.refresh();
 
-    // TODO:later on create toast component
+    // TODO:Completed:- create toast component in error message section
     if (error) {
-      console.log(error);
+      // show the error message in toastify format
+      toast.error(error.message);
+    }
+    // else show logged out sucessfully
+    else {
+      toast.success("Logged out!");
     }
   };
   return (
