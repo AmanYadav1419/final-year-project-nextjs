@@ -5,10 +5,13 @@ import { BiSearch } from "react-icons/bi";
 import { HiHome } from "react-icons/hi";
 import { RxCaretLeft, RxCaretRight } from "react-icons/rx";
 
-
 import { twMerge } from "tailwind-merge";
 import Button from "./Button";
 import useAuthModal from "@/hooks/useAuthModal";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useUser } from "@/hooks/useUser";
+import { FaUserAlt } from "react-icons/fa";
+import { toast } from "react-hot-toast";
 
 interface HeaderProps {
   children: React.ReactNode;
@@ -20,9 +23,26 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
   // used router hook for navigation
   const router = useRouter();
 
-  // handle Logout in the future
-  const handleLogout = () => {
-    // handle Logout in the future
+  const supabaseClient = useSupabaseClient();
+  // extract the info from useUser hook
+  const { user } = useUser();
+
+  // if any error occured login out
+  const handleLogout = async () => {
+    const { error } = await supabaseClient.auth.signOut();
+
+    // TODO:Reset any playing songs in future
+    router.refresh();
+
+    // TODO:Completed:- create toast component in error message section
+    if (error) {
+      // show the error message in toastify format
+      toast.error(error.message);
+    }
+    // else show logged out sucessfully
+    else {
+      toast.success("Logged out!");
+    }
   };
   return (
     <div
@@ -134,35 +154,57 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
         gap-x-4
         "
         >
-          <>
-            <div>
-              {/* import the custom button */}
+          {/* checked the condition if user is logged in */}
+          {user ? (
+            <div className="flex gap-4 items-center">
               <Button
-                onClick={authModal.onOpen}
-                className="
-                  bg-transparent
-                  text-neutral-300
-                  font-medium
-                  "
+                // onclick handle / run logout function
+                onClick={handleLogout}
+                className="bg-white px-6 py-2"
               >
-                Sign Up
+                Logout
               </Button>
-            </div>
 
-            <div>
-              {/* import the custom button */}
               <Button
-                onClick={authModal.onOpen}
-                className="
-                  bg-white
-                  px-6
-                  py-2
-                  "
+                // onclick push to route account
+                onClick={() => router.push("/account")}
+                className="bg-white"
               >
-                Log in
+                <FaUserAlt />
               </Button>
             </div>
-          </>
+          ) : (
+            // if user is not logged in show the login & signup button
+            <>
+              <div>
+                {/* import the custom button */}
+                <Button
+                  onClick={authModal.onOpen}
+                  className="
+                    bg-transparent
+                    text-neutral-300
+                    font-medium
+                    "
+                >
+                  Sign Up
+                </Button>
+              </div>
+
+              <div>
+                {/* import the custom button */}
+                <Button
+                  onClick={authModal.onOpen}
+                  className="
+                    bg-white
+                    px-6
+                    py-2
+                    "
+                >
+                  Log in
+                </Button>
+              </div>
+            </>
+          )}
         </div>
       </div>
       {children}
