@@ -10,6 +10,7 @@ import Button from "./Button";
 import useAuthModal from "@/hooks/useAuthModal";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useUser } from "@/hooks/useUser";
+import { FaUserAlt } from "react-icons/fa";
 
 interface HeaderProps {
   children: React.ReactNode;
@@ -147,35 +148,57 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
         gap-x-4
         "
         >
-          <>
-            <div>
-              {/* import the custom button */}
+          {/* checked the condition if user is logged in */}
+          {user ? (
+            <div className="flex gap-4 items-center">
               <Button
-                onClick={authModal.onOpen}
-                className="
-                  bg-transparent
-                  text-neutral-300
-                  font-medium
-                  "
+                // onclick handle / run logout function
+                onClick={handleLogout}
+                className="bg-white px-6 py-2"
               >
-                Sign Up
+                Logout
               </Button>
-            </div>
 
-            <div>
-              {/* import the custom button */}
               <Button
-                onClick={authModal.onOpen}
-                className="
-                  bg-white
-                  px-6
-                  py-2
-                  "
+                // onclick push to route account
+                onClick={() => router.push("/account")}
+                className="bg-white"
               >
-                Log in
+                <FaUserAlt />
               </Button>
             </div>
-          </>
+          ) : (
+            // if user is not logged in show the login & signup button
+            <>
+              <div>
+                {/* import the custom button */}
+                <Button
+                  onClick={authModal.onOpen}
+                  className="
+                    bg-transparent
+                    text-neutral-300
+                    font-medium
+                    "
+                >
+                  Sign Up
+                </Button>
+              </div>
+
+              <div>
+                {/* import the custom button */}
+                <Button
+                  onClick={authModal.onOpen}
+                  className="
+                    bg-white
+                    px-6
+                    py-2
+                    "
+                >
+                  Log in
+                </Button>
+              </div>
+            </>
+          )}
         </div>
       </div>
       {children}

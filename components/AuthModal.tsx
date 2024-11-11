@@ -66,4 +66,3 @@ const AuthModal = () => {
 
 export default AuthModal;
 
-// video start from 2:19:10
