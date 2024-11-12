@@ -2,11 +2,26 @@
 
 import { AiOutlinePlus } from "react-icons/ai";
 import { TbPlaylist } from "react-icons/tb";
+import useAuthModal from "@/hooks/useAuthModal";
+import { useUser } from "@/hooks/useUser";
+import useUploadModal from "@/hooks/useUploadModal";
 
 const Library = () => {
+  const authModal = useAuthModal();
+  const { user } = useUser();
+  const uploadModal = useUploadModal();
+
   const onClick = () => {
-    // handle upload later,
-    // which will use to upload the song
+    // first check that if user is authenticated or not
+    // if not authenticated open authentication modal
+    if (!user) {
+      return authModal.onOpen();
+    }
+
+    // TODO : Check for subscription
+
+    // else open the upload modal
+    return uploadModal.onOpen();
   };
 
   return (
@@ -61,7 +76,6 @@ const Library = () => {
         "
       >
         List of Songs!!
-        
       </div>
     </div>
   );
