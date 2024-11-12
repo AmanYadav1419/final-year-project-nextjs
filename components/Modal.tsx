@@ -1,38 +1,34 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { IoMdClose } from "react-icons/io";
 
-interface ModelProps{
-    isOpen: boolean;
-    // fixed the typo in the prop name by aman yadav
-    OnChange: (open: boolean) => void;
-    title: string;
-    description: string;
-    children: React.ReactNode,
+interface ModelProps {
+  isOpen: boolean;
+  // fixed the typo in the prop name by aman yadav
+  OnChange: (open: boolean) => void;
+  title: string;
+  description: string;
+  children: React.ReactNode;
 }
 const Modal: React.FC<ModelProps> = ({
-    isOpen,
-    OnChange,
-    title,
-    description,
-    children
+  isOpen,
+  OnChange,
+  title,
+  description,
+  children,
 }) => {
-    return (  
-      <Dialog.Root
-        open = {isOpen}
-        defaultOpen = {isOpen}
-        onOpenChange = {OnChange}
-
-        >
-            <Dialog.Portal>
-                <Dialog.Overlay 
-                 className="bg-neutral-900/90
+  return (
+    <Dialog.Root open={isOpen} defaultOpen={isOpen} onOpenChange={OnChange}>
+      <Dialog.Portal>
+        <Dialog.Overlay
+          className="bg-neutral-900/90
                  backdrop-blur-sm
                  fixed
                  insert-0
-                 "/>
-                     
-              <Dialog.Content 
-              className="
+                 "
+        />
+
+        <Dialog.Content
+          className="
               fixed
               drop-shadow-md
               border
@@ -54,34 +50,34 @@ const Modal: React.FC<ModelProps> = ({
             focus:outline-none
               
               
-              "> 
-              <Dialog.Title
-              className="
+              "
+        >
+          <Dialog.Title
+            className="
               text-xl
               text-centre
               font-bold
               mb-4
 
               "
-              >
-                {title}
-              </Dialog.Title>
-              <Dialog.Description
-              className="
+          >
+            {title}
+          </Dialog.Title>
+          <Dialog.Description
+            className="
               mb-5 
               text-sm
               leading-normal
               text-center
               
-              ">
-                {description}
-              </Dialog.Description>
-              <div>
-                {children}
-              </div>
-              <Dialog.Close asChild>
-                <button 
-                className="
+              "
+          >
+            {description}
+          </Dialog.Description>
+          <div>{children}</div>
+          <Dialog.Close asChild>
+            <button
+              className="
                 text-neutral-400
                 hover:text-white
                 absolute
@@ -95,14 +91,15 @@ const Modal: React.FC<ModelProps> = ({
                 justify-center
                 rounded-full
                 focus-outline-none
-                ">
-                    <IoMdClose />
-                </button>
-              </Dialog.Close>
-                </Dialog.Content>  
-            </Dialog.Portal>
-      </Dialog.Root>
-    );
-}
- 
-export default Modal ;
+                "
+            >
+              <IoMdClose />
+            </button>
+          </Dialog.Close>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
+  );
+};
+
+export default Modal;
