@@ -1,16 +1,29 @@
 "use client";
 
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import uniqid from "uniqid";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import useUploadModal from "@/hooks/useUploadModal";
 import Modal from "./Modal";
 import { useState } from "react";
 import Input from "./Input";
 import Button from "./Button";
+import { toast } from "react-hot-toast";
+import { useUser } from "@/hooks/useUser";
+import { useRouter } from "next/navigation";
 
 const UploadModal = () => {
   // useUploadModal hook
   const uploadModal = useUploadModal();
 
+  // import user info
+  const { user } = useUser();
+
+  // import router to navigate through url or paths
+  const router = useRouter();
+
+  // to use supbaseclient
+  const supabaseClient = useSupabaseClient();
   // state for loading
   const [isLoading, setIsLoading] = useState(false);
 
@@ -34,8 +47,99 @@ const UploadModal = () => {
     }
   };
 
-  const onSubmit: SubmitHandler<FieldValues> = async (vaules) => {
+  const onSubmit: SubmitHandler<FieldValues> = async (values) => {
     // Upload to supabase
+    // try catch block for safer exection of function
+    try {
+      setIsLoading(true);
+
+      // extract image files
+      // why [0] because it should take the first file
+      const imageFile = values.image?.[0];
+      // extract song files
+      // why [0] because it should take the first file
+      const songFile = values.song?.[0];
+
+      // if we doesn't have any of these return error
+      if (!imageFile || !songFile || !user) {
+        toast.error("Missing Feilds");
+        // and last return entire thing so this don't go any further
+        return;
+      }
+
+      // define unique id to safely store/upload the song and use in supabase bucket
+      const uniqueID = uniqid();
+
+      // uplaod songs
+      const {
+        // we have to remap data and error to understand better
+        data: songData,
+        error: songError,
+      } = await supabaseClient.storage
+        .from("songs")
+        .upload(`song-${values.title}-${uniqueID}`, songFile, {
+          cacheControl: "3600",
+          upsert: false,
+        });
+
+      // if any error occured while uploading song
+      if (songError) {
+        // make loading stop to break the function
+        setIsLoading(false);
+        toast.error("Failed Song Upload");
+      }
+
+      // Upload Image
+      const {
+        // we have to remap data and error to understand better
+        data: imageData,
+        error: imageError,
+      } = await supabaseClient.storage
+        .from("images")
+        .upload(`image-${values.title}-${uniqueID}`, imageFile, {
+          cacheControl: "3600",
+          upsert: false,
+        });
+
+      // if any error occured while uploading image
+      if (imageError) {
+        // make loading stop to break the function
+        setIsLoading(false);
+        return toast.error("Failed Image Upload");
+      }
+
+      // if every thing uploads done completely then do this
+      const {
+        // remap error with supabaseError to understand better
+        error: supabaseError,
+      } = await supabaseClient.from("songs").insert({
+        user_id: user.id,
+        title: values.title,
+        author: values.author,
+        image_path: imageData.path,
+        // later on remoe the question mark
+        song_path: songData?.path,
+      });
+
+      // if any error occured
+      if (supabaseError) {
+        setIsLoading(false);
+        return toast.error(supabaseError.message);
+      }
+
+      // if everything done perfectly then, do this
+      // this gonna be useful when we list out our song
+      router.refresh();
+      setIsLoading(false);
+      // success message of song creation
+      toast.success("Song Created");
+      reset();
+      uploadModal.onClose()
+    } catch (error) {
+      toast.error("Something went wrong");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -99,5 +203,3 @@ const UploadModal = () => {
 };
 
 export default UploadModal;
-
-// video start from 2:43:50
