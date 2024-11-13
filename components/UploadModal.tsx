@@ -1,5 +1,6 @@
 "use client";
 
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import uniqid from "uniqid";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import useUploadModal from "@/hooks/useUploadModal";
@@ -17,6 +18,8 @@ const UploadModal = () => {
   // import user info
   const { user } = useUser();
 
+  // to use supbaseclient
+  const supabaseClient = useSupabaseClient();
   // state for loading
   const [isLoading, setIsLoading] = useState(false);
 
@@ -60,6 +63,27 @@ const UploadModal = () => {
         return;
       }
 
+      // define unique id to safely store/upload the song and use in supabase bucket
+      const uniqueID = uniqid();
+
+      // uplaod songs
+      const {
+        // we have to remap data and error to understand better
+        data: songData,
+        error: songError,
+      } = await supabaseClient.storage
+        .from("songs")
+        .upload(`song-${values.title}-${uniqueID}`, songFile, {
+          cacheControl: "3600",
+          upsert: false,
+        });
+
+        // if any error occured while uploading song
+        if(songError){
+          // make loading stop to break the function
+          setIsLoading(false);
+          toast.error("Failed Song Upload");
+        }
     } catch (error) {
       toast.error("Something went wrong");
     } finally {
