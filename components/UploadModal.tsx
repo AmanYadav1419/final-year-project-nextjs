@@ -78,12 +78,31 @@ const UploadModal = () => {
           upsert: false,
         });
 
-        // if any error occured while uploading song
-        if(songError){
-          // make loading stop to break the function
-          setIsLoading(false);
-          toast.error("Failed Song Upload");
-        }
+      // if any error occured while uploading song
+      if (songError) {
+        // make loading stop to break the function
+        setIsLoading(false);
+        toast.error("Failed Song Upload");
+      }
+
+      // Upload Image
+      const {
+        // we have to remap data and error to understand better
+        data: imageData,
+        error: imageError,
+      } = await supabaseClient.storage
+        .from("images")
+        .upload(`image-${values.title}-${uniqueID}`, imageFile, {
+          cacheControl: "3600",
+          upsert: false,
+        });
+
+      // if any error occured while uploading image
+      if (imageError) {
+        // make loading stop to break the function
+        setIsLoading(false);
+        toast.error("Failed Image Upload");
+      }
     } catch (error) {
       toast.error("Something went wrong");
     } finally {
