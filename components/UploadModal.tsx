@@ -1,15 +1,21 @@
 "use client";
 
+import uniqid from "uniqid";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import useUploadModal from "@/hooks/useUploadModal";
 import Modal from "./Modal";
 import { useState } from "react";
 import Input from "./Input";
 import Button from "./Button";
+import { toast } from "react-hot-toast";
+import { useUser } from "@/hooks/useUser";
 
 const UploadModal = () => {
   // useUploadModal hook
   const uploadModal = useUploadModal();
+
+  // import user info
+  const { user } = useUser();
 
   // state for loading
   const [isLoading, setIsLoading] = useState(false);
@@ -34,8 +40,31 @@ const UploadModal = () => {
     }
   };
 
-  const onSubmit: SubmitHandler<FieldValues> = async (vaules) => {
+  const onSubmit: SubmitHandler<FieldValues> = async (values) => {
     // Upload to supabase
+    // try catch block for safer exection of function
+    try {
+      setIsLoading(true);
+
+      // extract image files
+      // why [0] because it should take the first file
+      const imageFile = values.image?.[0];
+      // extract song files
+      // why [0] because it should take the first file
+      const songFile = values.song?.[0];
+
+      // if we doesn't have any of these return error
+      if (!imageFile || !songFile || !user) {
+        toast.error("Missing Feilds");
+        // and last return entire thing so this don't go any further
+        return;
+      }
+
+    } catch (error) {
+      toast.error("Something went wrong");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -99,5 +128,3 @@ const UploadModal = () => {
 };
 
 export default UploadModal;
-
-// video start from 2:43:50
