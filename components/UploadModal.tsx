@@ -10,6 +10,7 @@ import Input from "./Input";
 import Button from "./Button";
 import { toast } from "react-hot-toast";
 import { useUser } from "@/hooks/useUser";
+import { useRouter } from "next/navigation";
 
 const UploadModal = () => {
   // useUploadModal hook
@@ -17,6 +18,9 @@ const UploadModal = () => {
 
   // import user info
   const { user } = useUser();
+
+  // import router to navigate through url or paths
+  const router = useRouter();
 
   // to use supbaseclient
   const supabaseClient = useSupabaseClient();
@@ -101,8 +105,36 @@ const UploadModal = () => {
       if (imageError) {
         // make loading stop to break the function
         setIsLoading(false);
-        toast.error("Failed Image Upload");
+        return toast.error("Failed Image Upload");
       }
+
+      // if every thing uploads done completely then do this
+      const {
+        // remap error with supabaseError to understand better
+        error: supabaseError,
+      } = await supabaseClient.from("songs").insert({
+        user_id: user.id,
+        title: values.title,
+        author: values.author,
+        image_path: imageData.path,
+        // later on remoe the question mark
+        song_path: songData?.path,
+      });
+
+      // if any error occured
+      if (supabaseError) {
+        setIsLoading(false);
+        return toast.error(supabaseError.message);
+      }
+
+      // if everything done perfectly then, do this
+      // this gonna be useful when we list out our song
+      router.refresh();
+      setIsLoading(false);
+      // success message of song creation
+      toast.success("Song Created");
+      reset();
+      uploadModal.onClose()
     } catch (error) {
       toast.error("Something went wrong");
     } finally {
