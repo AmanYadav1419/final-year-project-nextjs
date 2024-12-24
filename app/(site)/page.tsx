@@ -2,6 +2,10 @@ import Header from "@/components/Header";
 import ListItem from "@/components/ListItem";
 import React from "react";
 
+// this means this page doesn't get cached
+// that the data on page is always up to date
+export const revalidate = 0;
+
 const Home = () => {
   return (
     <div
