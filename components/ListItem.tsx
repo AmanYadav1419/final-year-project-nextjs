@@ -79,3 +79,6 @@ const ListItem: React.FC<ListItemProps> = ({ image, name, href }) => {
 
 
 export default ListItem;
+
+
+//time duration : 3:09:00
