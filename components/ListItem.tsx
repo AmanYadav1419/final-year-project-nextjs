@@ -7,21 +7,21 @@ import { FaPlay } from "react-icons/fa";
 interface ListItemProps {
   image: string;
   name: string;
-  herf: string;
+  href: string;
 }
 
-const ListItem: React.FC<ListItemProps> = ({ image, name, herf }) => {
+const ListItem: React.FC<ListItemProps> = ({ image, name, href }) => {
   const router = useRouter();
 
   // on click function
   const onClick = () => {
     // Add authentication before push
     // want to add/push only the authenticated user
-    router.push(herf);
+    router.push(href);
   };
   return (
     <button
-      onclick={onclick}
+      onClick={onClick}
       className="
         relative
         group
@@ -77,4 +77,11 @@ const ListItem: React.FC<ListItemProps> = ({ image, name, herf }) => {
   );
 };
 
+
 export default ListItem;
+
+
+//time duration : 3:09:00
+//issue solved
+
+
