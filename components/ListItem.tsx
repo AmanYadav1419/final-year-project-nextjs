@@ -72,7 +72,7 @@ const ListItem: React.FC<ListItemProps> = ({ image, name, href }) => {
         >
           <FaPlay className="text-black"/>
         </div>
-     
+     {/* video start from 56:15 */}
     </button>
   );
 };
