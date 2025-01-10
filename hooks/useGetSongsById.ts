@@ -1,8 +1,11 @@
+"use client";
+
 import { useEffect, useMemo, useState } from "react"
 import { useSessionContext } from "@supabase/auth-helpers-react";
-import toast from "react-hot-toast";
+
 
 import { Song } from "@/types";
+import { toast } from "react-hot-toast";
 
 const useGetSongById = (id?: string) => {
     const[isLoading, setIsLoading] = useState(false);
