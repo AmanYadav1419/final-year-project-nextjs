@@ -48,9 +48,10 @@ const LikedContent: React.FC<LikedContentProps> = ({
                     className="flex items-center gap-x-4 w-full"
                 >
                     <div className="flex-1">
-                        <MediaItem />
+                        <MediaItem 
                             onClick={() => {}}
                             data={song}
+                        />
                     </div>
                     <LikeButton songId={song.id}/>
                 </div>
@@ -60,3 +61,5 @@ const LikedContent: React.FC<LikedContentProps> = ({
 }
 
 export default LikedContent;
+
+//start from 4:03:00
