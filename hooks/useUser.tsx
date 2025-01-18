@@ -3,7 +3,9 @@ import {
     useSessionContext, 
     useUser as useSupaUser 
 } from "@supabase/auth-helpers-react";
-import { createContext, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { createContext } from "react";
+
 
 import { Subscription, UserDetails } from "@/types"
 
