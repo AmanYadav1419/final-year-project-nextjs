@@ -15,7 +15,7 @@
     "@supabase/auth-helpers-react": "^0.5.0",
     "@supabase/auth-ui-react": "^0.4.7",
     "@supabase/auth-ui-shared": "^0.1.8",
-    "next": "14.2.15",
+    "next": "14.2.35",
     "query-string": "^9.1.1",
     "react": "^18",
     "react-dom": "^18",
